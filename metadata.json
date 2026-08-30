@@ -1,0 +1,8 @@
+{
+  "name": "Game Studio Idle",
+  "description": "Un Idle Game de gestion d'un studio de développement de jeux vidéo en Vanilla JS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
