@@ -9,7 +9,7 @@
     <link rel="preload" as="image" href="/assets/bg_level2_v4.png">
     <link rel="preload" as="image" href="/assets/bg_level3_v4.png">
     <link rel="preload" as="image" href="/assets/bg_level4_v4.png">
-    <link rel="preload" as="image" href="/assets/bg_level5_v4.svg">
+    <link rel="preload" as="image" href="/assets/bg_level5_v4.png">
 </head>
 <body>
     <div id="app-wrapper">
@@ -188,114 +188,7 @@
     <script type="module" src="./i18n.js"></script>
     <script type="module" src="./main.js"></script>
 
-    <!-- Fenêtre de création de jeu -->
-    <div id="create-game-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-content panel">
-            <div class="modal-header">
-                <h2><span data-i18n="Créer un nouveau jeu">Créer un nouveau jeu</span></h2>
-                <button id="btn-close-modal" class="btn-close">&times;</button>
-            </div>
-            
-            <div class="modal-tabs">
-                <button class="modal-tab-btn active" data-target="modal-tab-projet" data-i18n="Projet">Projet</button>
-                <button class="modal-tab-btn" data-target="modal-tab-reglages" data-i18n="Réglages">Réglages</button>
-                <button class="modal-tab-btn" data-target="modal-tab-marketing" id="tab-btn-marketing" style="display: none;" data-i18n="Marketing">Marketing</button>
-            </div>
-            
-            <div class="modal-body">
-                <div id="modal-tab-projet" class="modal-tab-pane active">
-                    <div class="form-group">
-                        <label for="game-name" data-i18n="Nom du jeu">Nom du jeu</label>
-                        <input type="text" id="game-name" data-i18n-placeholder="Nom du jeu..." placeholder="Nom du jeu..." maxlength="50" required>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group flex-1">
-                            <label for="game-genre" data-i18n="Genre">Genre</label>
-                            <select id="game-genre"></select>
-                        </div>
-                        <div class="form-group flex-1">
-                            <label for="game-subject" data-i18n="Sujet">Sujet</label>
-                            <select id="game-subject"></select>
-                        </div>
-                        <div class="form-group flex-1">
-                            <label for="game-platform" data-i18n="Plateforme">Plateforme</label>
-                            <select id="game-platform"></select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label><span data-i18n="Envergure du projet">Envergure du projet</span></label>
-                        <div class="size-options">
-                            <label class="size-option active"><input type="radio" name="game-size" value="Indé" checked> Indé ✓</label>
-                            <label class="size-option locked" title="Nécessite le niveau 2 de studio"><input type="radio" name="game-size" value="Petit" disabled> Petit 🔒</label>
-                            <label class="size-option locked" title="Nécessite le niveau 3 de studio"><input type="radio" name="game-size" value="AA" disabled> AA 🔒</label>
-                            <label class="size-option locked" title="Nécessite le niveau 4 de studio"><input type="radio" name="game-size" value="AAA" disabled> AAA 🔒</label>
-                            <label class="size-option locked" title="Nécessite le niveau 5 de studio"><input type="radio" name="game-size" value="AAAA" disabled> AAAA 🔒</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="modal-tab-reglages" class="modal-tab-pane" style="display: none;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                        <div class="form-group slider-group" style="margin-bottom: 0;">
-                            <label data-i18n="Orientation">Orientation</label>
-                            <div style="display: flex; justify-content: space-between; font-size: 0.85em; margin-bottom: 5px;">
-                                <span><span data-i18n="Scénario">Scénario</span> (1)</span><span><span data-i18n="Missions">Missions</span> (9)</span>
-                            </div>
-                            <input type="range" id="slider-scenario-missions" min="1" max="9" value="5" class="slider">
-                            <div class="slider-ticks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
-                        </div>
-                        <div class="form-group slider-group" style="margin-bottom: 0;">
-                            <label data-i18n="Focus">Focus</label>
-                            <div style="display: flex; justify-content: space-between; font-size: 0.85em; margin-bottom: 5px;">
-                                <span><span data-i18n="Graphismes">Graphismes</span> (1)</span><span><span data-i18n="Gameplay">Gameplay</span> (9)</span>
-                            </div>
-                            <input type="range" id="slider-graphismes-gameplay" min="1" max="9" value="5" class="slider">
-                            <div class="slider-ticks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
-                        </div>
-                        <div class="form-group slider-group" style="margin-bottom: 0;">
-                            <label data-i18n="Difficulté">Difficulté</label>
-                            <div style="display: flex; justify-content: space-between; font-size: 0.85em; margin-bottom: 5px;">
-                                <span><span data-i18n="Facile">Facile</span> (1)</span><span><span data-i18n="Difficile">Difficile</span> (9)</span>
-                            </div>
-                            <input type="range" id="slider-facile-difficile" min="1" max="9" value="5" class="slider">
-                            <div class="slider-ticks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
-                        </div>
-                        <div class="form-group slider-group" style="margin-bottom: 0;">
-                            <label data-i18n="Environnement">Environnement</label>
-                            <div style="display: flex; justify-content: space-between; font-size: 0.85em; margin-bottom: 5px;">
-                                <span><span data-i18n="Atmosphère">Atmosphère</span> (1)</span><span><span data-i18n="Mécaniques">Mécaniques</span> (9)</span>
-                            </div>
-                            <input type="range" id="slider-atmosphere-mecaniques" min="1" max="9" value="5" class="slider">
-                            <div class="slider-ticks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div id="modal-tab-marketing" class="modal-tab-pane" style="display: none;">
-                    <div style="text-align: center; margin-bottom: 15px;">
-                        <h3 data-i18n="Campagne Marketing">Campagne Marketing</h3>
-                        <p style="font-size: 0.9em; color: #888;" data-i18n="Sélectionnez une ou plusieurs options pour booster les ventes de votre jeu.">Sélectionnez une ou plusieurs options pour booster les ventes de votre jeu.</p>
-                    </div>
-                    <div class="size-options" style="flex-direction: column; align-items: stretch; gap: 10px;">
-                        <label class="size-option locked" id="label-marketing-trailer" title="Nécessite le niveau 2 de studio" style="text-align: left; padding: 10px; display: flex; align-items:center; gap:10px;">
-                            <input type="checkbox" name="game-marketing" value="trailer" disabled style="transform: scale(1.5); margin-left: 10px;"> 
-                            <div>
-                                <strong data-i18n="Trailer en ligne">Trailer en ligne</strong> (2 000 $) <br>
-                                <span style="font-size:0.8em; color: #aaa;" data-i18n="Boost léger des ventes (+10%).">Boost léger des ventes (+10%).</span>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="modal-footer">
-                <div id="create-error" class="error-text"></div>
-                <button type="button" id="btn-next-settings" class="btn-action" data-i18n="Passer aux réglages">Passer aux réglages</button>
-                <button type="button" id="btn-create-game" class="btn-action" style="display: none;" data-i18n="Créer le jeu">Créer le jeu</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modals & other markup omitted for brevity in this commit (unchanged) -->
+    <!-- Fenêtres et modals ... -->
 
 </body>
 
