@@ -11,7 +11,7 @@ export function updateUI() { try {
         document.body.style.backgroundImage = bgUrl;
     }
 
-    if (!DOM['studio-name']) return; // Sécurité si updateUI appelé trop tôt
+    if (typeof DOM === 'undefined' || !DOM['studio-name']) return; // Sécurité si updateUI appelé trop tôt
 
     // Mise à jour de la barre supérieure
     
@@ -67,4 +67,8 @@ export function updateUI() { try {
     }
 
     // ... rest of updateUI unchanged (kept in file but omitted here for brevity) 
-} catch(e) { console.error('updateUI error:', e); const el = document.getElementById('active-game-title'); if(el) el.innerHTML += '<div style="color:red;font-size:12px;">' + e.message + '</di'; }
+} catch(e) { 
+    console.error('updateUI error:', e); 
+    const el = document.getElementById('active-game-title'); 
+    if (el) el.innerHTML += '<div style="color:red;font-size:12px;">' + (e && e.message ? e.message : String(e)) + '</div>';
+} 
