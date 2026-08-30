@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="g2" x1="0" x2="1">
+      <stop offset="0%" stop-color="#253b4a" />
+      <stop offset="100%" stop-color="#122235" />
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#g2)" />
+  <text x="50%" y="50%" font-size="48" fill="#a3be8c" font-family="Segoe UI, Tahoma, Geneva, Verdana, sans-serif" text-anchor="middle" dominant-baseline="middle">BG Level 2</text>
+</svg>
