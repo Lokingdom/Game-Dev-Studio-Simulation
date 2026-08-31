@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/Game-Dev-Studio-Simulation/public/">
+    <title>Game Studio Idle</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preload" as="image" href="assets/bg_level1_v4.png">
+    <link rel="preload" as="image" href="assets/bg_level2_v4.png">
+    <link rel="preload" as="image" href="assets/bg_level3_v4.png">
+    <link rel="preload" as="image" href="assets/bg_level4_v4.png">
+    <link rel="preload" as="image" href="assets/bg_level5_v4.png">
+</head>
+<body>
+    <div id="app-wrapper">
+        <header id="top-bar">
+            <div class="top-bar-left" style="display: flex; align-items: center; gap: 15px;">
+                <h1 id="studio-name" style="margin: 0;">Mon Super Studio</h1>
+                <div class="stat-badge level-badge" style="margin: 0; font-size: 0.8em; padding: 4px 8px;">
+                    🏢 Niv. <span id="level">1</span>
+                </div>
+            </div>
+            <div class="top-bar-center">
+                <div class="stat-badge money-badge">
+                    💰 <span id="money">1000</span> $
+                </div>
+                
+            </div>
+            <div class="top-bar-right" style="display: flex; gap: 10px; margin-right: 15px;">
+                <button id="btn-settings" class="btn-small" style="font-weight: bold; cursor: pointer; background-color: #34495e; color: white; border: none; border-radius: 4px; padding: 5px 10px;">⚙️ <span data-i18n="Paramètres">Paramètres</span></button>
+                <button id="btn-save-game" class="btn-small" style="font-weight: bold; cursor: pointer; background-color: #27ae60; color: white; border: none; border-radius: 4px; padding: 5px 10px;">💾 <span data-i18n="Sauvegarder">Sauvegarder</span></button>
+            </div>
+        </header>
+
+        <div id="main-layout">
+            <!-- Colonne Gauche -->
+            <aside id="left-column" class="column">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-target="tab-studio" data-i18n="Studio">Studio</button>
+                    <button class="tab-btn" data-target="tab-personnage" data-i18n="Personnages">Personnages</button>
+                    <button class="tab-btn" data-target="tab-moteur" data-i18n="Moteur">Moteur</button>
+                    </div>
+                <div class="tabs-content">
+                    
+                    <div id="tab-studio" class="tab-pane active">
+                        <div class="panel">
+                            
+                            <p style="margin-bottom: 5px; font-weight: bold; font-size: 1.1em;" id="studio-level-name"><span data-i18n="Studio Indé (Niv. 1)">Studio Indé (Niv. 1)</span></p>
+                            <div class="item-progress-container" style="margin-top: 15px;">
+                                <div class="progress-bar-bg-small" style="width: 100%;">
+                                    <div id="studio-progress" class="progress-bar-fill-small" style="width: 20%;"></div>
+                                </div>
+                            </div>
+                            <p id="studio-upgrade-price-container" style="margin-top: 10px; font-size: 0.9em; color: #aaa;"><span data-i18n="Prix : ">Prix : </span><span id="studio-price">10000</span> $</p>
+                            <button id="btn-upgrade-studio" class="btn-action" style="width: 100%; margin-top: 10px;"><span data-i18n="Améliorer le Studio">Améliorer le Studio</span></button>
+                            <hr style="border: 1px solid var(--border-color); margin: 15px 0;">
+                            <h4><span data-i18n="Avantages du niveau suivant">Avantages du niveau suivant</span></h4>
+                            <p id="studio-next-benefits" style="font-size: 0.85em; color: #aaa; margin-top: 5px;"><span data-i18n="Débloque la taille de jeu 'Petit' et la possibilité de recruter les premiers employés.">Débloque la taille de jeu 'Petit' et la possibilité de recruter les premiers employés.</span></p>
+                        </div>
+                    </div>
+
+                    <div id="tab-personnage" class="tab-pane">
+                        <div class="characters-list panel">
+                            
+                            <div class="character-item active-character">
+                                <div class="item-header">
+                                    <input type="text" id="founder-name" class="founder-input" value="Fondateur" data-i18n-placeholder="Votre pseudo..." />
+                                    <span class="item-level"><span data-i18n="Niveau ">Niveau </span><span id="perso-level">1</span> / 10</span>
+                                </div>
+                                <div class="item-progress-container">
+                                    <div class="progress-bar-bg-small">
+                                        <div id="perso-progress" class="progress-bar-fill-small" style="width: 20%;"></div>
+                                    </div>
+                                    <button type="button" id="btn-upgrade-perso" class="btn-plus">+</button>
+                                </div>
+                                <div class="item-price" id="perso-price-container"><span data-i18n="Prix : ">Prix : </span><span id="perso-price">100</span> $</div>
+                            </div>
+<div id="employes-container"></div>                        
+                            
+                        </div>
+                    </div>
+                    <div id="tab-moteur" class="tab-pane" style="display:none;">
+                        <div class="engine-section panel">
+                            
+                            <div class="engine-item active-character">
+                                <div class="item-header">
+                                    <span class="item-name" id="moteur-name-display">Moteur</span>
+                                    <span class="item-level"><span data-i18n="Niveau ">Niveau </span><span id="moteur-level">1</span> / 10</span>
+                                </div>
+                                <div class="item-progress-container">
+                                    <div class="progress-bar-bg-small">
+                                        <div id="moteur-progress" class="progress-bar-fill-small" style="width: 20%;"></div>
+                                    </div>
+                                    <button type="button" id="btn-upgrade-moteur" class="btn-plus">+</button>
+                                </div>
+                                <div class="item-price" id="moteur-price-container"><span data-i18n="Prix : ">Prix : </span><span id="moteur-price">100</span> $</div>
+                                
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Centre -->
+            <main id="center-column" class="column">
+                <div id="center-nav" style="display: none;">
+                    <button id="btn-back-center" class="btn-back"><span data-i18n="← Retour">← Retour</span></button>
+                    <h2 id="center-title">Création de jeu</h2>
+                </div>
+
+                <div id="center-content">
+                    <div id="idle-screen" class="screen panel active" style="flex-direction: column; justify-content: center; align-items: center;">
+                        <button id="btn-show-create" class="btn-massive" style="margin-bottom: 15px;"><span data-i18n="Créer un nouveau jeu">Créer un nouveau jeu</span></button>
+                        <button id="btn-show-recherche" class="btn-massive" style="background-color: var(--accent-color);"><span data-i18n="Recherches">Recherches</span></button>
+                    </div>
+
+                    <div id="active-game-area" class="screen panel" style="display: none;">
+                        <h2 id="active-game-title" data-i18n="Développement en cours">Développement en cours</h2>
+                        <div class="game-info">
+                            <h3 id="active-game-name" style="text-align: center; font-size: 1.5em; margin-bottom: 20px;"></h3>
+                        </div>
+
+                        <div id="development-progress-section">
+                            <p style="text-align: center; margin-bottom: 10px;"><strong><span id="active-game-progress-label" data-i18n="Progression du développement">Progression du développement</span> : <span id="active-game-progress-percent">0</span>%</strong></p>
+                            <div class="progress-bar-container" style="position: relative; height: 30px; background-color: var(--bg-tertiary); border-radius: 4px; overflow: hidden;">
+                                <div id="active-game-progress-bar" class="progress-bar" style="height: 100%;"></div>
+                                <div id="active-game-progress-text" style="position: absolute; width: 100%; text-align: center; top: 50%; transform: translateY(-50%); font-weight: bold; color: white; text-shadow: 1px 1px 2px #000;">0%</div>
+                            </div>
+                            <div style="text-align: center; margin-top: 15px;">
+                                <button type="button" id="btn-cancel-dev" class="btn-action" data-i18n="Retour à la création de jeu">Retour à la création de jeu</button>
+                            </div>
+                        </div>
+
+                        <div id="active-game-scoring-section" style="display: none; text-align: center; padding: 20px 0;">
+                            <h3 data-i18n="Note du jeu">Note du jeu</h3>
+                            <div id="animated-score" style="font-size: 4em; font-weight: bold; color: var(--accent-color);">0</div>
+                        </div>
+                    </div>
+                    <div id="game-summary-area" class="screen panel" style="display: none;">
+                        <h3 class="summary-title" data-i18n="JEU TERMINÉ !">JEU TERMINÉ !</h3>
+                        <div class="summary-info">
+                            <p><strong data-i18n="Nom :">Nom :</strong> <span id="summary-game-name"></span></p>
+                            <p><strong data-i18n="Genre :">Genre :</strong> <span id="summary-game-genre"></span></p>
+                            <p><strong data-i18n="Difficulté :">Difficulté :</strong> <span id="summary-game-difficulty"></span></p>
+                            <p><strong data-i18n="Sujet :">Sujet :</strong> <span id="summary-game-subject"></span></p>
+                            <div id="summary-game-caracteristiques" class="game-qualites"></div>
+                            <p><strong data-i18n="Note :">Note :</strong> <span id="summary-game-score"></span>/100</p>
+                            <p><strong data-i18n="Revenus :">Revenus :</strong> <span id="summary-game-revenue"></span> $</p>
+                            <p><strong><span data-i18n="Réputation gagnée :">Réputation gagnée :</span></strong> +<span id="summary-game-rep"></span></p>
+                        </div>
+                        <p class="summary-footer"><em><span data-i18n="Retour à l'écran principal dans ">Retour à l'écran principal dans </span> <span id="summary-time-left"></span>s...</em></p>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Colonne Droite -->
+            <aside id="right-column" class="column">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-target="tab-recent" data-i18n="Jeux en vente">Jeux en vente</button>
+                    <button class="tab-btn" data-target="tab-history" data-i18n="Historique">Historique</button>
+                </div>
+                <div class="tabs-content">
+                    <div id="tab-recent" class="tab-pane active">
+                        <div class="panel">
+                            <h3><span data-i18n="Jeux en cours de vente">Jeux en cours de vente</span></h3>
+                            <div id="recent-games-list">
+                                <p data-i18n="Aucun jeu terminé.">Aucun jeu terminé.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-history" class="tab-pane" style="display:none;">
+                        
+                        <div class="history-section panel">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;"><h3 style="margin: 0;" data-i18n="Jeux sortis">Jeux sortis</h3></div>
+                            <div id="games-history-list">
+                                <!-- Liste des jeux -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        
+    </div>
+    
+    <script type="module" src="../i18n.js"></script>
+    <script type="module" src="../main.js"></script>
+
+    <!-- Fenêtres et modals ... -->
+
+</body>
+
+</html>
