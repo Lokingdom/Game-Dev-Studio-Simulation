@@ -1,0 +1,63 @@
+/* Définition des variables de couleurs et de thème */
+:root {
+    --bg-color: #1e1e2e;
+    --text-color: #ffffff;
+    --accent-color: #ffcc00;
+    --secondary-color: #4a6fa5;
+    --border-color: #2b3a4a;
+    --panel-bg: rgba(24, 24, 37, 0.85); /* Semi-transparent pour voir le fond */
+    --success-color: #2ecc71;
+    --danger-color: #e74c3c;
+    --progress-bg: #2c3e50;
+    --progress-fill: #f39c12;
+}
+
+/* --- SCROLLBAR --- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color); 
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color); 
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color); 
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%; min-height: 100%;
+}
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%; min-height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    /* level 1 background uses the studio image provided by the user */
+    background-image: url('assets/bg_level1_v4.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--text-color);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+#app-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+/* rest of CSS unchanged ... (kept as in previous commit) */
