@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="/Game-Dev-Studio-Simulation/">
     <title>Game Studio Idle</title>
-    <link rel="stylesheet" href="./styles.css">
-    <link rel="preload" as="image" href="/assets/bg_level1_v4.png">
-    <link rel="preload" as="image" href="/assets/bg_level2_v4.png">
-    <link rel="preload" as="image" href="/assets/bg_level3_v4.png">
-    <link rel="preload" as="image" href="/assets/bg_level4_v4.png">
-    <link rel="preload" as="image" href="/assets/bg_level5_v4.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preload" as="image" href="assets/bg_level1_v4.png">
+    <link rel="preload" as="image" href="assets/bg_level2_v4.png">
+    <link rel="preload" as="image" href="assets/bg_level3_v4.png">
+    <link rel="preload" as="image" href="assets/bg_level4_v4.png">
+    <link rel="preload" as="image" href="assets/bg_level5_v4.png">
 </head>
 <body>
     <div id="app-wrapper">
@@ -27,8 +28,8 @@
                 
             </div>
             <div class="top-bar-right" style="display: flex; gap: 10px; margin-right: 15px;">
-                <button id="btn-settings" class="btn-small" style="font-weight: bold; cursor: pointer; background-color: #34495e; color: white; border: none; border-radius: 4px; padding: 5px 10px;">⚙️</button>
-                <button id="btn-save-game" class="btn-small" style="font-weight: bold; cursor: pointer; background-color: #27ae60; color: white; border: none; border-radius: 4px; padding: 5px 10px">💾</button>
+                <button id="btn-settings" class="btn-small" style="font-weight: bold; cursor: pointer; background-color: #34495e; color: white; border: none; border-radius: 4px; padding: 5px 10px;">⚙️ <span data-i18n="Paramètres">Paramètres</span></button>
+                <button id="btn-save-game" class="btn-small" style="font-weight: bold; cursor: pointer; background-color: #27ae60; color: white; border: none; border-radius: 4px; padding: 5px 10px;">💾 <span data-i18n="Sauvegarder">Sauvegarder</span></button>
             </div>
         </header>
 
@@ -51,11 +52,11 @@
                                     <div id="studio-progress" class="progress-bar-fill-small" style="width: 20%;"></div>
                                 </div>
                             </div>
-                            <p id="studio-upgrade-price-container" style="margin-top: 10px; font-size: 0.9em; color: #aaa;"><span data-i18n="Prix : ">Prix : </span><span id="studio-price">10000</span></p>
+                            <p id="studio-upgrade-price-container" style="margin-top: 10px; font-size: 0.9em; color: #aaa;"><span data-i18n="Prix : ">Prix : </span><span id="studio-price">10000</span> $</p>
                             <button id="btn-upgrade-studio" class="btn-action" style="width: 100%; margin-top: 10px;"><span data-i18n="Améliorer le Studio">Améliorer le Studio</span></button>
                             <hr style="border: 1px solid var(--border-color); margin: 15px 0;">
                             <h4><span data-i18n="Avantages du niveau suivant">Avantages du niveau suivant</span></h4>
-                            <p id="studio-next-benefits" style="font-size: 0.85em; color: #aaa; margin-top: 5px;"><span data-i18n="Débloque la taille de jeu 'Petit' et la possibilité de recruter...">Débloque la taille de jeu 'Petit' et la possibilité de recruter...</span></p>
+                            <p id="studio-next-benefits" style="font-size: 0.85em; color: #aaa; margin-top: 5px;"><span data-i18n="Débloque la taille de jeu 'Petit' et la possibilité de recruter les premiers employés.">Débloque la taille de jeu 'Petit' et la possibilité de recruter les premiers employés.</span></p>
                         </div>
                     </div>
 
@@ -122,10 +123,10 @@
                         </div>
 
                         <div id="development-progress-section">
-                            <p style="text-align: center; margin-bottom: 10px;"><strong><span id="active-game-progress-label" data-i18n="Progression du développement">Progression du développement</span></strong></p>
+                            <p style="text-align: center; margin-bottom: 10px;"><strong><span id="active-game-progress-label" data-i18n="Progression du développement">Progression du développement</span> : <span id="active-game-progress-percent">0</span>%</strong></p>
                             <div class="progress-bar-container" style="position: relative; height: 30px; background-color: var(--bg-tertiary); border-radius: 4px; overflow: hidden;">
                                 <div id="active-game-progress-bar" class="progress-bar" style="height: 100%;"></div>
-                                <div id="active-game-progress-text" style="position: absolute; width: 100%; text-align: center; top: 50%; transform: translateY(-50%); font-weight: bold; color: white;"></div>
+                                <div id="active-game-progress-text" style="position: absolute; width: 100%; text-align: center; top: 50%; transform: translateY(-50%); font-weight: bold; color: white; text-shadow: 1px 1px 2px #000;">0%</div>
                             </div>
                             <div style="text-align: center; margin-top: 15px;">
                                 <button type="button" id="btn-cancel-dev" class="btn-action" data-i18n="Retour à la création de jeu">Retour à la création de jeu</button>
@@ -185,8 +186,8 @@
         
     </div>
     
-    <script type="module" src="./i18n.js"></script>
-    <script type="module" src="./main.js"></script>
+    <script type="module" src="i18n.js"></script>
+    <script type="module" src="main.js"></script>
 
     <!-- Fenêtres et modals ... -->
 
