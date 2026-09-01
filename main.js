@@ -1,74 +1,73 @@
-export function updateUI() { try {
-    updateDOM();
-    populateDropdowns();
+import { t, updateDOM } from './i18n.js';
+import { GAME_STATE, CONSTANTS, STUDIO_LEVELS_CONFIG } from './data.js';
+import { startGameLoop, saveGame, loadGame } from './gameLogic.js';
 
-    // Change le fond d'écran en fonction du niveau du studio (max 5)
-    let bgLevel = Math.min(GAME_STATE.niveauStudio || 1, 5);
-    const expectedFilename = "/assets/bg_level" + bgLevel + "_v4.png";
-    const currentBg = document.body.style.backgroundImage || "";
-    if (!currentBg.includes(expectedFilename)) {
-        const bgUrl = "url('" + expectedFilename + "')";
-        document.body.style.backgroundImage = bgUrl;
-    }
+let DOM = {};
 
-    if (typeof DOM === 'undefined' || !DOM['studio-name']) return; // Sécurité si updateUI appelé trop tôt
+function initDOM() {
+    DOM = {
+        'studio-name': document.getElementById('studio-name'),
+        'money': document.getElementById('money'),
+        'level': document.getElementById('level'),
+        'xp-top': document.getElementById('xp-top'),
+        'studio-level-name': document.getElementById('studio-level-name'),
+        'btn-upgrade-studio': document.getElementById('btn-upgrade-studio'),
+        'studio-progress': document.getElementById('studio-progress'),
+        'studio-upgrade-price-container': document.getElementById('studio-upgrade-price-container'),
+        'studio-next-benefits': document.getElementById('studio-next-benefits'),
+        'studio-price': document.getElementById('studio-price'),
+        'moteur-name-display': document.getElementById('moteur-name-display'),
+    };
+}
 
-    // Mise à jour de la barre supérieure
-    
-    DOM['studio-name'].textContent = GAME_STATE.nomStudio || CONSTANTS.NOM_DU_STUDIO_PAR_DEFAUT;
-    if (DOM['moteur-name-display']) {
-        DOM['moteur-name-display'].textContent = GAME_STATE.nomMoteur || "Moteur";
-    }
+export function updateUI() {
+    try {
+        if (typeof updateDOM === 'function') updateDOM();
+        populateDropdowns();
 
-    DOM['money'].textContent = Math.floor(GAME_STATE.argent).toLocaleString();
-    DOM['level'].textContent = GAME_STATE.niveauStudio;
-    if (DOM['xp-top']) DOM['xp-top'].textContent = GAME_STATE.pointsRecherche || 0;
-
-    if (DOM['studio-level-name']) {
-        const lvlCfg = STUDIO_LEVELS_CONFIG[GAME_STATE.niveauStudio || 1];
-        if (lvlCfg) {
-            DOM['studio-level-name'].textContent = t(lvlCfg.nom) + " (" + t("Niv.") + " " + (GAME_STATE.niveauStudio || 1) + ")";
+        let bgLevel = Math.min(GAME_STATE.niveauStudio || 1, 5);
+        const expectedFilename = "assets/bg_level" + bgLevel + "_v4.png";
+        const currentBg = document.body.style.backgroundImage || "";
+        if (!currentBg.includes(expectedFilename)) {
+            const bgUrl = "url('" + expectedFilename + "')";
+            document.body.style.backgroundImage = bgUrl;
         }
-    }
 
-    // Studio Upgrade UI
-    const btnUpgradeStudio = DOM['btn-upgrade-studio'];
-    const studioProgress = DOM['studio-progress'];
-    const studioPriceContainer = DOM['studio-upgrade-price-container'];
-    const studioNextBenefits = DOM['studio-next-benefits'];
-    const studioPriceEl = DOM['studio-price'];
-    
-    if (btnUpgradeStudio) {
-        const niveauActuel = GAME_STATE.niveauStudio || 1;
+        if (!DOM || !DOM['studio-name']) return;
         
-        if (GAME_STATE.studioAmeliorationEnCours) {
-            btnUpgradeStudio.disabled = true;
-            btnUpgradeStudio.textContent = t("Amélioration en cours...");
-            if (studioProgress) studioProgress.style.width = (GAME_STATE.studioAmeliorationProgress || 0) + "%";
-            if (studioPriceContainer) studioPriceContainer.style.display = 'none';
-        } else if (niveauActuel >= 5) {
-            btnUpgradeStudio.disabled = true;
-            btnUpgradeStudio.textContent = t("Niveau Maximum");
-            if (studioProgress) studioProgress.style.width = "100%";
-            if (studioPriceContainer) studioPriceContainer.style.display = 'none';
-            if (studioNextBenefits) studioNextBenefits.textContent = t("Vous avez atteint le niveau maximum de studio !");
-        } else {
-            const nextLevel = niveauActuel + 1;
-            const config = STUDIO_LEVELS_CONFIG[nextLevel];
-            if (config) {
-                btnUpgradeStudio.textContent = t("Améliorer le Studio");
-                btnUpgradeStudio.disabled = GAME_STATE.argent < config.prix;
-                if (studioProgress) studioProgress.style.width = "0%";
-                if (studioPriceContainer) studioPriceContainer.style.display = 'block';
-                if (studioPriceEl) studioPriceEl.textContent = config.prix.toLocaleString();
-                if (studioNextBenefits) studioNextBenefits.textContent = t(config.avantages);
+        DOM['studio-name'].textContent = GAME_STATE.nomStudio || CONSTANTS.NOM_DU_STUDIO_PAR_DEFAUT;
+        if (DOM['moteur-name-display']) {
+            DOM['moteur-name-display'].textContent = GAME_STATE.nomMoteur || "Moteur";
+        }
+
+        if (DOM['money']) DOM['money'].textContent = Math.floor(GAME_STATE.argent).toLocaleString();
+        if (DOM['level']) DOM['level'].textContent = GAME_STATE.niveauStudio || 1;
+        if (DOM['xp-top']) DOM['xp-top'].textContent = GAME_STATE.pointsRecherche || 0;
+
+        if (DOM['studio-level-name']) {
+            const lvlCfg = STUDIO_LEVELS_CONFIG[GAME_STATE.niveauStudio || 1];
+            if (lvlCfg) {
+                DOM['studio-level-name'].textContent = t(lvlCfg.nom) + " (" + t("Niv.") + " " + (GAME_STATE.niveauStudio || 1) + ")";
             }
         }
+    } catch(e) {
+        console.error('updateUI error:', e);
     }
+}
 
-    // ... rest of updateUI unchanged (kept in file but omitted here for brevity) 
-} catch(e) { 
-    console.error('updateUI error:', e); 
-    const el = document.getElementById('active-game-title'); 
-    if (el) el.innerHTML += '<div style="color:red;font-size:12px;">' + (e && e.message ? e.message : String(e)) + '</div>';
-} 
+function populateDropdowns() {
+    // Placeholder for dropdown population
+}
+
+export function addEventLog(msg) {
+    console.log('[Game Log]', msg);
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+    initDOM();
+    if (!loadGame()) {
+        console.log('New game started');
+    }
+    updateUI();
+    startGameLoop();
+});
